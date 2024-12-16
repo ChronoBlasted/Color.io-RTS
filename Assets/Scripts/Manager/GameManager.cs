@@ -5,7 +5,8 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
-public enum GameState { Menu, Pause, Game, End }
+public enum GameState { None, Menu, Pause, Game, End }
+public enum Team { None, Blue, Red, Yellow, Green }
 
 public class GameManager : MonoSingleton<GameManager>
 {
@@ -14,9 +15,16 @@ public class GameManager : MonoSingleton<GameManager>
 
     public GameState GameState { get => _gameState; }
 
+
     private void Awake()
     {
+        PoolManager.Instance.Init();
+
         CameraController.Instance.Init();
+
+        UIManager.Instance.Init();
+
+        BoardManager.Instance.Init();
 
         UpdateStateToGame();
     }
@@ -25,7 +33,7 @@ public class GameManager : MonoSingleton<GameManager>
     {
         _gameState = newState;
 
-        Debug.LogWarning("New GameState : " + _gameState);
+        //Debug.LogWarning("New GameState : " + _gameState);
 
         switch (_gameState)
         {
