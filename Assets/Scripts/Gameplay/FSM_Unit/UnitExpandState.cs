@@ -3,7 +3,7 @@ using UnityEngine.AI;
 
 public class UnitExpandState : State<Unit>
 {
-    Unit.UnitAnimationName animationName = Unit.UnitAnimationName.Run;
+    Unit.UnitAnimationName animationName = Unit.UnitAnimationName.Walk;
 
     Cell cellToReach;
 
@@ -11,7 +11,7 @@ public class UnitExpandState : State<Unit>
     {
         _owner.PlayAnimation(animationName);
 
-        _owner.SetVelocity(3);
+        _owner.SetVelocity(1);
 
         _owner.SetDestination(FindClosestCellToConquer());
 
@@ -32,13 +32,13 @@ public class UnitExpandState : State<Unit>
         {
             Debug.Log("Find New Cell because invalid path");
 
-            FindClosestCellToConquer();
+            _owner.SetDestination(FindClosestCellToConquer());
         }
         else if (cellToReach.CellTeam == _owner.PawnController.Team)
         {
             Debug.Log("Find New Cell because cell was taken by team");
 
-            FindClosestCellToConquer();
+            _owner.SetDestination(FindClosestCellToConquer());
         }
     }
 

@@ -8,6 +8,7 @@ public class Unit : MonoBehaviour
     {
         None,
         Idle,
+        Defend,
         Walk,
         Run,
         Die,
@@ -32,6 +33,7 @@ public class Unit : MonoBehaviour
         _stateMachine.AddState(new UnitAttackUnitState());
         _stateMachine.AddState(new UnitAttackBaseState());
         _stateMachine.AddState(new UnitExpandState());
+        _stateMachine.AddState(new UnitDefendState());
         _stateMachine.AddState(new UnitDieState());
 
         _stateMachine.SetState<UnitExpandState>();

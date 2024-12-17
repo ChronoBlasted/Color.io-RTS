@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 public class PawnController : MonoBehaviour
 {
-    public UnityAction OnPawnDie;
+    public UnityAction<PawnController> OnPawnDie;
 
     Team _team;
 

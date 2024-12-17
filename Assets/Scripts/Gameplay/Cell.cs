@@ -30,7 +30,11 @@ public class Cell : MonoBehaviour
             {
                 _pawnInCell = pawn;
 
+                ScoreManager.Instance.AddScore(cellTeam, -1);
+
                 cellTeam = pawn.Team;
+
+                ScoreManager.Instance.AddScore(cellTeam);
 
                 _meshRenderer.sharedMaterial = ColorManager.Instance.GetMaterialByTeam(cellTeam);
             }
@@ -48,7 +52,7 @@ public class Cell : MonoBehaviour
         }
     }
 
-    void ResetCell()
+    void ResetCell(PawnController pawnToAdd)
     {
         _pawnInCell = null;
     }

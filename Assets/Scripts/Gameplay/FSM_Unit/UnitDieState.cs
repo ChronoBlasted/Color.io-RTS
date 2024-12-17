@@ -10,7 +10,7 @@ public class UnitDieState : State<Unit>
     {
         _owner.PlayAnimation(animationName);
 
-        _owner.PawnController.OnPawnDie?.Invoke();
+        _owner.PawnController.OnPawnDie?.Invoke(_owner.PawnController);
 
         _owner.ReleaseInPool();
     }
