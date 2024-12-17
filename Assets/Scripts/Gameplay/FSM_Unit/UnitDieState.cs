@@ -1,3 +1,7 @@
+using System.Collections;
+using UnityEngine;
+using static UnityEngine.UI.GridLayoutGroup;
+
 public class UnitDieState : State<Unit>
 {
     Unit.UnitAnimationName animationName = Unit.UnitAnimationName.Die;
@@ -5,6 +9,10 @@ public class UnitDieState : State<Unit>
     public override void Enter()
     {
         _owner.PlayAnimation(animationName);
+
+        _owner.PawnController.OnPawnDie?.Invoke();
+
+        _owner.ReleaseInPool();
     }
 
     public override void Exit()

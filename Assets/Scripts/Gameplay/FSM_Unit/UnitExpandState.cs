@@ -14,6 +14,7 @@ public class UnitExpandState : State<Unit>
         _owner.SetVelocity(3);
 
         _owner.SetDestination(FindClosestCellToConquer());
+
     }
 
     public override void Exit()
@@ -23,8 +24,6 @@ public class UnitExpandState : State<Unit>
 
     public override void Update()
     {
-        float dist = _owner.Agent.remainingDistance;
-
         if (_owner.Agent.pathStatus == NavMeshPathStatus.PathComplete)
         {
             _owner.SetDestination(FindClosestCellToConquer());
@@ -37,6 +36,8 @@ public class UnitExpandState : State<Unit>
         }
         else if (cellToReach.CellTeam == _owner.PawnController.Team)
         {
+            Debug.Log("Find New Cell because cell was taken by team");
+
             FindClosestCellToConquer();
         }
     }

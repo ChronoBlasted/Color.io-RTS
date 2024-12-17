@@ -7,22 +7,49 @@ public class Cell : MonoBehaviour
     Team cellTeam = Team.None;
     [SerializeField] MeshRenderer _meshRenderer;
 
+    PawnController _pawnInCell;
+
     public Team CellTeam { get => cellTeam; }
+    public PawnController PawnInCell { get => _pawnInCell; set => _pawnInCell = value; }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.layer == 10)
         {
-            PawnController controller = other.GetComponent<PawnController>();
+            PawnController pawn = other.GetComponent<PawnController>();
+            pawn.OnPawnDie += ResetCell;
 
-            if (controller.Team == cellTeam) return;
+            if (pawn.Team == cellTeam) return;
+
+            if (_pawnInCell != null && pawn.Team != _pawnInCell.Team)
+            {
+                _pawnInCell.Unit.StateMachine.SetState<UnitDieState>();
+                pawn.Unit.StateMachine.SetState<UnitDieState>();
+            }
             else
             {
-                cellTeam = controller.Team;
+                _pawnInCell = pawn;
+
+                cellTeam = pawn.Team;
 
                 _meshRenderer.sharedMaterial = ColorManager.Instance.GetMaterialByTeam(cellTeam);
-
             }
         }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.layer == 10)
+        {
+            PawnController pawn = other.GetComponent<PawnController>();
+            pawn.OnPawnDie -= ResetCell;
+
+            if (_pawnInCell == pawn) _pawnInCell = null;
+        }
+    }
+
+    void ResetCell()
+    {
+        _pawnInCell = null;
     }
 }
