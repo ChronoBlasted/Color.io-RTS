@@ -27,6 +27,9 @@ public class Unit : MonoBehaviour
 
     public void Init()
     {
+        _agent.enabled = true;
+        _coll.enabled = true;
+
         _stateMachine = new FiniteStateMachine<Unit>(this);
 
         _stateMachine.AddState(new UnitIdleState());
@@ -37,9 +40,6 @@ public class Unit : MonoBehaviour
         _stateMachine.AddState(new UnitDieState());
 
         _stateMachine.SetState<UnitExpandState>();
-
-        _agent.enabled = true;
-        _coll.enabled = true;
     }
 
     private void Update()

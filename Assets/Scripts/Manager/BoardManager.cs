@@ -70,4 +70,6 @@ public class BoardManager : MonoSingleton<BoardManager>
 
         pawnToAdd.OnPawnDie -= RemovePawnFromList;
     }
+
+    public int GetTotalCellCount => cells.Count;
 }

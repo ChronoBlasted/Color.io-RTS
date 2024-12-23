@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -10,14 +11,18 @@ public class PawnController : MonoBehaviour
     Team _team;
 
     [SerializeField] SkinnedMeshRenderer _head, _body;
+    [SerializeField] TMP_Text _index;
     [SerializeField] Unit _unit;
 
     public Team Team { get => _team; }
     public Unit Unit { get => _unit; }
 
-    public void Init(Team newTeam)
+    public void Init(Team newTeam, int index)
     {
         _team = newTeam;
+
+        _index.gameObject.SetActive(_team == PlayerManager.Instance.PlayerTeamColor);
+        _index.text = "#" + index;
 
         SetColor();
 

@@ -14,7 +14,6 @@ public class UnitExpandState : State<Unit>
         _owner.SetVelocity(1);
 
         _owner.SetDestination(FindClosestCellToConquer());
-
     }
 
     public override void Exit()

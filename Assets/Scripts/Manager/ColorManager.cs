@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class ColorManager : MonoSingleton<ColorManager>
 {
+    public Color selectedColor;
     [SerializeField] Color blueColor, redColor, yellowColor, greenColor, whiteColor;
     [SerializeField] Material blueMat, redMat, yellowMat, greenMat, whiteMat;
 

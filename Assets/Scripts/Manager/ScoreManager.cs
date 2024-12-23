@@ -32,15 +32,32 @@ public class ScoreManager : MonoSingleton<ScoreManager>
         OnScoreUpdate?.Invoke();
     }
 
+    public int GetScoreByTeam(Team team)
+    {
+        switch (team)
+        {
+            case Team.Blue:
+                return ScoreBlue;
+            case Team.Red:
+                return ScoreRed;
+            case Team.Yellow:
+                return ScoreYellow;
+            case Team.Green:
+                return ScoreGreen;
+        }
+
+        return 0;
+    }
+
     public List<TeamScore> GetLeaderBoard()
     {
         List<TeamScore> teamScores = new List<TeamScore>
-    {
-        new TeamScore(Team.Blue, ScoreBlue),
-        new TeamScore(Team.Red, ScoreRed),
-        new TeamScore(Team.Yellow, ScoreYellow),
-        new TeamScore(Team.Green, ScoreGreen)
-    };
+        {
+            new TeamScore(Team.Blue, ScoreBlue),
+            new TeamScore(Team.Red, ScoreRed),
+            new TeamScore(Team.Yellow, ScoreYellow),
+            new TeamScore(Team.Green, ScoreGreen)
+        };
 
         teamScores.Sort((a, b) => b.Score.CompareTo(a.Score));
 
