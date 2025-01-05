@@ -13,9 +13,11 @@ public class PawnController : MonoBehaviour
     [SerializeField] SkinnedMeshRenderer _head, _body;
     [SerializeField] TMP_Text _index;
     [SerializeField] Unit _unit;
+    [SerializeField] FlockingAgent _flockingAgent;
 
     public Team Team { get => _team; }
     public Unit Unit { get => _unit; }
+    public FlockingAgent FlockingAgent { get => _flockingAgent; }
 
     public void Init(Team newTeam, int index)
     {
@@ -52,5 +54,10 @@ public class PawnController : MonoBehaviour
                 pawn.Unit.StateMachine.SetState<UnitDieState>();
             }
         }
+    }
+
+    public void Die()
+    {
+        Unit.StateMachine.SetState<UnitDieState>();
     }
 }

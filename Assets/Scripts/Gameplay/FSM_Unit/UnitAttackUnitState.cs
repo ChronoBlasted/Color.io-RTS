@@ -48,6 +48,13 @@ public class UnitAttackUnitState : State<Unit>
     {
         pawnToReach = BoardManager.Instance.GetClosestPawn(_owner.transform.position, _owner.PawnController.Team);
 
+        if (pawnToReach == null)
+        {
+            _stateMachine.SetState<UnitDefendState>();
+
+            return Vector3.zero;
+        }
+
         return pawnToReach.transform.position;
     }
 }

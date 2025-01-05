@@ -9,7 +9,7 @@ public class UnitInfoLayout : MonoBehaviour
     [SerializeField] TMP_Text _title;
     [SerializeField] PawnController _controller;
 
-    [SerializeField] Image bgAttack, bgIdle, bgDefend, bgExpand;
+    [SerializeField] Image bgAttackUnit, bgAttackBase, bgIdle, bgDefend, bgExpand;
 
     Image currentImg;
 
@@ -18,7 +18,16 @@ public class UnitInfoLayout : MonoBehaviour
         _title.text = "#" + index;
         _controller = controller;
 
-        UpdateLastClickBg(bgExpand);
+        var ColorBG = ColorManager.Instance.GetColorByTeam(PlayerManager.Instance.PlayerTeamColor);
+
+        bgAttackUnit.color = ColorBG;
+        bgAttackBase.color = ColorBG;
+        bgIdle.color = ColorBG;
+        bgDefend.color = ColorBG;
+        bgExpand.color = ColorBG;
+
+
+        UpdateLastClickBg(bgDefend);
 
         _controller.OnPawnDie += Die;
     }
@@ -34,7 +43,14 @@ public class UnitInfoLayout : MonoBehaviour
     {
         _controller.Unit.StateMachine.SetState<UnitAttackUnitState>();
 
-        UpdateLastClickBg(bgAttack);
+        UpdateLastClickBg(bgAttackUnit);
+    }
+
+    public void HandleOnAttackBase()
+    {
+        _controller.Unit.StateMachine.SetState<UnitAttackBaseState>();
+
+        UpdateLastClickBg(bgAttackBase);
     }
 
     public void HandleOnDefend()

@@ -22,11 +22,15 @@ public class GameManager : MonoSingleton<GameManager>
 
         CameraController.Instance.Init();
 
+        CameraManager.Instance.Init();
+
         UIManager.Instance.Init();
 
         BoardManager.Instance.Init();
 
-        UpdateStateToGame();
+        TimeManager.Instance.Init();
+
+        UpdateStateToMenu();
     }
 
     public void UpdateGameState(GameState newState)
@@ -71,7 +75,12 @@ public class GameManager : MonoSingleton<GameManager>
 
     public void UpdateStateToMenu() => UpdateGameState(GameState.Menu);
     public void UpdateStateToGame() => UpdateGameState(GameState.Game);
-    public void UpdateStateToEnd() => UpdateGameState(GameState.End);
+    public void UpdateStateToEnd(bool playerWin)
+    {
+        UIManager.Instance.EndGameView.UpdateEnd(playerWin);
+        UpdateGameState(GameState.End);
+    }
+
 
     private void Update()
     {

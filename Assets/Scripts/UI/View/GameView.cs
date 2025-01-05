@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GameView : View
 {
+    public List<UnitInfoLayout> UnitsInfoLayouts = new List<UnitInfoLayout>();    
+
     [SerializeField] ScoreLayout _scoreLayout;
     [SerializeField] PlayerInfoLayout _playerInfoLayout;
 
@@ -25,11 +27,15 @@ public class GameView : View
 
         currentUnitInfo.Init(index, controller);
 
+        UnitsInfoLayouts.Add(currentUnitInfo);
+
         _playerInfoLayout.UpdateTotalUnit(_scrollContent.childCount);
     }
 
     public void DestroyUnitInfo(UnitInfoLayout unitInfoToDestroy)
     {
+        UnitsInfoLayouts.Remove(unitInfoToDestroy);
+
         Destroy(unitInfoToDestroy.gameObject);
 
         _playerInfoLayout.UpdateTotalUnit(_scrollContent.childCount);

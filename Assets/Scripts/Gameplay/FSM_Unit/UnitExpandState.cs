@@ -45,6 +45,15 @@ public class UnitExpandState : State<Unit>
     {
         cellToReach = BoardManager.Instance.GetClosestCell(_owner.transform.position, _owner.PawnController.Team);
 
+        if (cellToReach == null) // Game ended all cell coloured
+        {
+            _stateMachine.SetState<UnitDefendState>();
+
+            if (_owner.PawnController.Team == PlayerManager.Instance.PlayerTeamColor) GameManager.Instance.UpdateStateToEnd(true);
+
+            return Vector3.zero;
+        }
+
         return cellToReach.transform.position;
     }
 }

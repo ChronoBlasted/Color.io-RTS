@@ -6,6 +6,7 @@ public class Cell : MonoBehaviour
 {
     Team cellTeam = Team.None;
     [SerializeField] MeshRenderer _meshRenderer;
+    [SerializeField] List<MeshRenderer> _decorations;
 
     PawnController _pawnInCell;
 
@@ -36,9 +37,20 @@ public class Cell : MonoBehaviour
 
                 ScoreManager.Instance.AddScore(cellTeam);
 
-                _meshRenderer.sharedMaterial = ColorManager.Instance.GetMaterialByTeam(cellTeam);
+                SetCellColor(cellTeam);
             }
         }
+    }
+
+    void SetCellColor(Team team)
+    {
+        _meshRenderer.sharedMaterial = ColorManager.Instance.GetMaterialByTeam(team);
+
+        foreach (var deco in _decorations)
+        {
+            deco.sharedMaterial = ColorManager.Instance.GetMaterialByTeam(team);
+        }
+
     }
 
     private void OnTriggerExit(Collider other)
@@ -55,5 +67,13 @@ public class Cell : MonoBehaviour
     void ResetCell(PawnController pawnToAdd)
     {
         _pawnInCell = null;
+    }
+
+    public void ResetColor()
+    {
+        ScoreManager.Instance.AddScore(cellTeam, -1);
+        _pawnInCell = null;
+        cellTeam = Team.None;
+        SetCellColor(cellTeam);
     }
 }
