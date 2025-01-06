@@ -25,6 +25,7 @@ public class SpawnPlayer : MonoBehaviour
 
     public float SpawnRate { get => GetSpawnRate(); }
     public Team Team { get => _team; }
+    public bool IsCastleAlive { get => isCastleAlive; }
 
     private void Update()
     {
@@ -33,7 +34,7 @@ public class SpawnPlayer : MonoBehaviour
         UIManager.Instance.GameView.PlayerInfoLayout.UpdateNewUnitIn(nextSpawn - Time.time);
 
 
-        if (CanSpawn() && isCastleAlive )
+        if (CanSpawn() && isCastleAlive)
         {
             SpawnUnit();
 
@@ -99,4 +100,8 @@ public class SpawnPlayer : MonoBehaviour
 
         if (_team == PlayerManager.Instance.PlayerTeamColor) GameManager.Instance.UpdateStateToEnd(false);
     }
+
+
+
+
 }

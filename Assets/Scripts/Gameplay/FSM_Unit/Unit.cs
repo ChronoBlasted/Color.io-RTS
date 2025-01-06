@@ -39,7 +39,7 @@ public class Unit : MonoBehaviour
         _stateMachine.AddState(new UnitDefendState());
         _stateMachine.AddState(new UnitDieState());
 
-        _stateMachine.SetState<UnitExpandState>();
+        _stateMachine.SetState<UnitDefendState>();
     }
 
     private void Update()

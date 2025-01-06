@@ -134,17 +134,18 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1025161574879485317}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6d6416bc4864d3848938b6d4ed2fd86c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 5049336775653874233}
   cohesionWeight: 1
-  alignmentWeight: 1
-  separationWeight: 1.5
-  neighborRadius: 7
-  separationRadius: 1
+  alignmentWeight: 0.5
+  separationWeight: 1
+  neighborRadius: 3
+  separationRadius: 1.5
+  areaSize: 8
 --- !u!1 &3294251810008227620
 GameObject:
   m_ObjectHideFlags: 0

@@ -16,7 +16,6 @@ public class UnitAttackUnitState : State<Unit>
         _owner.SetVelocity(2);
 
         _owner.SetDestination(FincClosestEnemy());
-
     }
 
     public override void Exit()

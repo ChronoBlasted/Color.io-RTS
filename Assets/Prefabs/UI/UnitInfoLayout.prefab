@@ -1219,7 +1219,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 6352311033379194754}
         m_TargetAssemblyTypeName: UnitInfoLayout, Assembly-CSharp
-        m_MethodName: HandleOnIdle
+        m_MethodName: HandleOnAttackBase
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

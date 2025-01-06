@@ -10,10 +10,15 @@ public class FlockingAgent : MonoBehaviour
     public float separationWeight = 1.5f;
     public float neighborRadius = 5f;
     public float separationRadius = 2f;
+    public float areaSize = 9f;
 
     List<FlockingAgent> flockMates;
-    private NavMeshAgent agent;
-    private Vector3 currentVelocity;
+    NavMeshAgent agent;
+    Vector3 currentVelocity;
+
+    float updateInterval = 2f;
+    float nextUpdateTime = 0f;
+
 
     private void OnEnable()
     {
@@ -28,9 +33,50 @@ public class FlockingAgent : MonoBehaviour
         Vector3 alignment = ComputeAlignment() * alignmentWeight;
         Vector3 separation = ComputeSeparation() * separationWeight;
 
-        Vector3 move = cohesion + alignment + separation;
-        agent.SetDestination(transform.position + move);
+        Vector3 move;
+
+        if (cohesion == Vector3.zero && alignment == Vector3.zero && separation == Vector3.zero)
+        {
+            if (Time.time < nextUpdateTime)
+                return;
+
+            nextUpdateTime = Time.time + updateInterval;
+
+            move = GetDefaultMovement();
+        }
+        else
+        {
+            move = cohesion + alignment + separation;
+        }
+
+        Vector3 targetPosition = transform.position + move;
+        targetPosition = ClampPositionToArea(targetPosition);
+
+        agent.SetDestination(targetPosition);
     }
+
+    Vector3 GetDefaultMovement()
+    {
+        float halfSize = areaSize / 2;
+
+        float randomX = Random.Range(-halfSize, halfSize);
+        float randomZ = Random.Range(-halfSize, halfSize);
+        return new Vector3(randomX, 0, randomZ);
+    }
+
+
+    Vector3 ClampPositionToArea(Vector3 position)
+    {
+        float halfSize = areaSize / 2;
+
+        Vector3 spawn = BoardManager.Instance.GetSpawnByColor(controller.Team).transform.position;
+
+        position.x = Mathf.Clamp(position.x, spawn.x - halfSize, spawn.x + halfSize);
+        position.z = Mathf.Clamp(position.z, spawn.z - halfSize, spawn.z + halfSize);
+
+        return position;
+    }
+
 
     Vector3 ComputeCohesion()
     {

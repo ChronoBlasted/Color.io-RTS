@@ -137,6 +137,34 @@ public class BoardManager : MonoSingleton<BoardManager>
         return closestPawn;
     }
 
+    public Transform GetClosestSpawn(Vector3 position, Team colorToIgnore)
+    {
+        Transform closestSpawn = null;
+
+        float closestDist = Mathf.Infinity;
+
+        foreach (var spawn in spawnPlayers)
+        {
+            if (spawn.Team == colorToIgnore || spawn.IsCastleAlive == false) continue;
+
+            var dist = Vector3.Distance(position, spawn.transform.position);
+
+            if (dist < closestDist)
+            {
+                closestSpawn = spawn.transform;
+                closestDist = dist;
+            }
+        }
+
+        if (closestSpawn == null)
+        {
+            GameManager.Instance.UpdateStateToEnd(colorToIgnore == PlayerManager.Instance.PlayerTeamColor);
+            return null;
+        }
+
+        return closestSpawn;
+    }
+
     void RemovePawnFromList(PawnController pawnToAdd)
     {
         pawns.Remove(pawnToAdd);
